@@ -1,0 +1,39 @@
+import {useEffect, useState, useMemo} from "react";
+
+const slowFunction = (count) => {
+    let j;
+    console.log("slow");
+    for(let i=0;i<100000007;i++)  j=i;
+    return  count;
+}
+const Header = () => {
+    const [count, setCount] = useState(0);
+    const [isDark, setIsDark] = useState(false);
+    const toggleColor = () => {
+        console.log("toggle");
+        setIsDark(!isDark);
+    }
+    
+    // slowFunction will be called everytime component rerenders
+    // const doubleCount = slowFunction(count);
+
+    const doubleCount = useMemo(() => { // this will store the previous input output as cache
+                                        //  and will not call this funtion if input output are same
+        return slowFunction(count);
+    }, [count])
+
+    const themeColor = {
+        backgroundColor: isDark ? "black" : "grey",
+        color: isDark? "white" : "black"
+    };
+
+    return ( 
+        <>
+            <input value={count} onChange={(e) => setCount(e.target.value)}></input>
+            <button onClick={toggleColor}>Dark Mode</button>
+            <h1 style={themeColor}>{doubleCount}</h1>
+        </>
+     );
+}
+ 
+export default Header;
