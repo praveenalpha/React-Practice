@@ -1,0 +1,26 @@
+import {useEffect, useState} from "react";
+
+// after every 2 sec count increases by 1
+const Header = () => {
+    const [count, setCount] = useState(0);
+    useEffect(() => {
+        var timer = setTimeout(() => {  // let or var both works
+            setCount(count+1);
+        }, 2000)
+        console.log("useEffect");
+        return () => clearTimeout(timer);   // this is when component unmounts
+    }, [count])
+
+    const onclickHandler = () => {
+        setCount(count+1);
+    }
+
+    return ( 
+        <>
+            <button onClick={onclickHandler}></button>
+            <h1>Hello {count}</h1>
+        </>
+     );
+}
+ 
+export default Header;
