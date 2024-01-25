@@ -1,0 +1,20 @@
+import {useEffect, useState, useRef} from "react";
+
+// if we want to calculate how many times our components get rendered
+const Header = () => {
+    const [name, setName] = useState("");
+    const count = useRef(0);
+
+    useEffect(()=>{
+        count.current = count.current+1;
+    })
+
+    return ( 
+        <>
+            <input value={name} onChange={e => setName(e.target.value)}></input>
+            <div>{count.current}</div>
+        </>
+     );
+}
+ 
+export default Header;
