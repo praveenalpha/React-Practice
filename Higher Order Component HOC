@@ -1,0 +1,63 @@
+//HOC
+
+import {useState} from "react";
+
+const Counter = (OldComponent, incrementBy) => {
+    return function EnhancedComponent(props) {
+        const [count, setCount] = useState(0);
+        return (
+            <OldComponent {...props} count = {count} incrementCount={()=>setCount(count+props.incrementBy)} />
+        );
+
+    }
+}
+ 
+export default Counter;
+
+import Counter from "../HOC/Counter";
+
+
+const OnClick = (props) => {
+    const {count, incrementCount, name} = props;
+    return ( 
+        <>
+            <button onClick={incrementCount}>Click Me</button>
+            <h1>{name} Click Count: {count}</h1>
+        </>
+     );
+}
+ 
+export default Counter(OnClick, 5);
+
+import Counter from "../HOC/Counter";
+
+
+const OnHover = (props) => {
+    const {count, incrementCount, name} = props;
+    return ( 
+        <>
+            <button onMouseOver={incrementCount}>Hover Me</button>
+            <h1>{name} Hover Count: {count}</h1>
+        </>
+     );
+}
+ 
+export default Counter(OnHover, 10);
+
+
+import './App.css';
+import Header from "./components/Header/Header";
+import OnClick from './components/OnClick/OnClick';
+import OnHover from './components/OnHover/OnHover';
+
+function App() {
+  return (
+    <div className="App">
+      <OnClick name="Praveen"/>
+      <OnHover name="Mani"/>
+
+    </div>
+  );
+}
+
+export default App;
